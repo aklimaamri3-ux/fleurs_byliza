@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleurs by Liza · Admin 🌹</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#d4517a;--pink-light:#fceef3;--pink-dark:#a83660;
+  --bg:#1a0d13;--surface:#2a1520;--surface2:#361c28;
+  --border:rgba(212,81,122,.2);--text:#f5e8ed;--muted:#9e7a88;
+  --green:#1a9e5c;--red:#d94040;--blue:#3a7cdc;--amber:#d97706;--r:16px
+}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.topbar{background:linear-gradient(135deg,#2a1520,#451828);padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;min-height:60px}
+.topbar-brand{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;display:flex;align-items:center;gap:8px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.notif-btn{position:relative;background:var(--surface2);border:1px solid var(--border);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
+.notif-count{position:absolute;top:-4px;right:-4px;background:var(--pink);color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:10px;display:none}
+.notif-count.show{display:block}
+
+.content{padding:16px;max-width:760px;margin:0 auto}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 10px;text-align:center}
+.stat-num{font-size:26px;font-weight:700;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:10px;color:var(--muted);font-weight:500}
+.stat-card:nth-child(1) .stat-num{color:var(--text)}
+.stat-card:nth-child(2) .stat-num{color:var(--amber)}
+.stat-card:nth-child(3) .stat-num{color:var(--green)}
+.stat-card:nth-child(4) .stat-num{color:var(--blue)}
+
+.search-bar{background:var(--surface);border:1px solid var(--border);border-radius:30px;display:flex;align-items:center;padding:0 16px;gap:10px;margin-bottom:12px}
+.search-bar input{flex:1;background:none;border:none;outline:none;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--text);padding:12px 0}
+.search-bar input::placeholder{color:var(--muted)}
+
+.filters{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.filters::-webkit-scrollbar{display:none}
+.chip{padding:7px 16px;border-radius:30px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .18s;font-family:'Tajawal',sans-serif}
+.chip:hover{color:var(--text)}
+.chip.active{background:var(--pink);border-color:var(--pink);color:#fff}
+
+.order-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.order-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.3)}
+.order-card.new-order{border-color:var(--pink);box-shadow:0 0 0 2px rgba(212,81,122,.25)}
+
+.order-head{display:flex;align-items:center;padding:14px 16px 10px;gap:12px;border-bottom:1px solid rgba(255,255,255,.05)}
+.ava{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#451828,#6b2040);display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid var(--border);flex-shrink:0}
+.order-meta{flex:1;min-width:0}
+.order-name{font-size:15px;font-weight:700}
+.order-sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.pill{padding:4px 11px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0}
+.s-pending{background:rgba(217,119,6,.18);color:#fbbf24}
+.s-confirmed{background:rgba(26,158,92,.18);color:#34d399}
+.s-refused{background:rgba(217,64,64,.18);color:#f87171}
+.s-delivered{background:rgba(58,124,220,.18);color:#93c5fd}
+
+.new-badge{font-size:9px;background:var(--pink);color:#fff;padding:2px 7px;border-radius:20px;font-weight:700;margin-left:4px;vertical-align:middle}
+
+.order-details{padding:10px 16px;display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12.5px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.04)}
+.det{display:flex;align-items:flex-start;gap:5px}.det span{color:var(--text)}
+
+.order-note{padding:8px 16px;font-size:12.5px;color:var(--muted);font-style:italic;border-bottom:1px solid rgba(255,255,255,.04)}
+
+.order-imgs{display:flex;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04)}
+.thumb-wrap{position:relative}
+.thumb-lbl{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);font-size:9px;text-align:center;color:rgba(255,255,255,.8);padding:2px;border-radius:0 0 8px 8px}
+.img-thumb{width:68px;height:68px;border-radius:10px;object-fit:cover;cursor:pointer;border:2px solid var(--border);transition:border-color .18s;display:block}
+.img-thumb:hover{border-color:var(--pink)}
+.no-img{width:68px;height:68px;border-radius:10px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:26px;border:2px dashed var(--border)}
+
+.order-actions{display:flex;gap:6px;padding:11px 16px;flex-wrap:wrap}
+.act{padding:7px 13px;border-radius:9px;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:'Tajawal',sans-serif;transition:all .15s;display:flex;align-items:center;gap:5px}
+.act:hover{opacity:.82;transform:scale(.97)}
+.act-confirm{background:rgba(26,158,92,.18);color:#34d399;border:1px solid rgba(26,158,92,.3)}
+.act-refuse{background:rgba(217,64,64,.18);color:#f87171;border:1px solid rgba(217,64,64,.3)}
+.act-deliver{background:rgba(58,124,220,.18);color:#93c5fd;border:1px solid rgba(58,124,220,.3)}
+.act-del{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid rgba(255,255,255,.1)}
+.act-del:hover{background:rgba(217,64,64,.18);color:#f87171;border-color:rgba(217,64,64,.3)}
+
+.empty{text-align:center;padding:64px 20px;color:var(--muted)}
+.empty .ico{font-size:52px;margin-bottom:12px}
+
+/* connecting banner */
+.connect-banner{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;text-align:center;margin-bottom:16px}
+.connect-banner .spinner{width:36px;height:36px;border:3px solid rgba(212,81,122,.3);border-top-color:var(--pink);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal img{max-width:92vw;max-height:82vh;border-radius:14px;object-fit:contain}
+.modal-close{position:absolute;top:16px;right:16px;background:#fff;border:none;border-radius:50%;width:38px;height:38px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+
+/* confirm */
+.confirm-dialog{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:flex-end;justify-content:center;padding:0 0 20px}
+.confirm-dialog.open{display:flex}
+.confirm-box{background:var(--surface2);border:1px solid var(--border);border-radius:20px 20px 16px 16px;padding:24px 20px;width:100%;max-width:400px;text-align:center}
+.confirm-box h3{font-size:16px;margin-bottom:8px}
+.confirm-box p{font-size:13px;color:var(--muted);margin-bottom:20px}
+.confirm-btns{display:flex;gap:10px}
+.confirm-btns button{flex:1;padding:13px;border-radius:12px;border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.btn-cancel{background:var(--surface);color:var(--muted)}
+.btn-danger{background:var(--red);color:#fff}
+
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-80px);padding:12px 24px;border-radius:50px;font-size:13px;font-weight:600;color:#fff;z-index:9999;transition:transform .4s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">🌹 Fleurs by Liza · Admin</div>
+  <div class="topbar-right">
+    <div class="notif-btn">
+      🔔
+      <span class="notif-count" id="notifCount">0</span>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num" id="s-total">—</div><div class="stat-lbl">إجمالي · Total</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-pending">—</div><div class="stat-lbl">⏳ انتظار</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-confirmed">—</div><div class="stat-lbl">✅ مؤكد</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-delivered">—</div><div class="stat-lbl">🚚 موصل</div></div>
+  </div>
+
+  <div class="search-bar">
+    <span style="font-size:16px">🔍</span>
+    <input type="text" id="search-inp" placeholder="بحث بالاسم أو الهاتف... · Rechercher..." oninput="render()">
+  </div>
+
+  <div class="filters">
+    <button class="chip active" data-f="all"       onclick="setFilter(this)">الكل · Tous</button>
+    <button class="chip"        data-f="pending"   onclick="setFilter(this)">⏳ انتظار</button>
+    <button class="chip"        data-f="confirmed" onclick="setFilter(this)">✅ مؤكد</button>
+    <button class="chip"        data-f="refused"   onclick="setFilter(this)">❌ مرفوض</button>
+    <button class="chip"        data-f="delivered" onclick="setFilter(this)">🚚 موصل</button>
+  </div>
+
+  <div id="orders-list">
+    <div class="connect-banner">
+      <div class="spinner"></div>
+      <p>جاري الاتصال بـ Firebase... · Connexion en cours...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal image -->
+<div class="modal" id="imgModal" onclick="closeModal()">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <img id="modalImg" src="">
+</div>
+
+<!-- Confirm delete -->
+<div class="confirm-dialog" id="confirmDlg">
+  <div class="confirm-box">
+    <h3>🗑️ حذف الطلب · Supprimer?</h3>
+    <p>هذا الإجراء لا يمكن التراجع عنه · Action irréversible.</p>
+    <div class="confirm-btns">
+      <button class="btn-cancel" onclick="cancelDel()">إلغاء · Annuler</button>
+      <button class="btn-danger" onclick="confirmDel()">حذف · Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:            "AIzaSyC2e6tX28E-BynFa3Be3nIbo-I29iLPidA",
+  authDomain:        "fleursby-liza.firebaseapp.com",
+  projectId:         "fleursby-liza",
+  storageBucket:     "fleursby-liza.firebasestorage.app",
+  messagingSenderId: "785764270424",
+  appId:             "1:785764270424:web:d030dcee6d97335c4ba52d",
+  measurementId:     "G-GCK1JZBM2H"
+});
+const db = getFirestore(app);
+
+let orders = [];
+let currentFilter = 'all';
+let deleteTarget  = null;
+
+const SL = { pending:'⏳ انتظار', confirmed:'✅ مؤكد', refused:'❌ مرفوض', delivered:'🚚 موصل' };
+const SC = { pending:'s-pending', confirmed:'s-confirmed', refused:'s-refused', delivered:'s-delivered' };
+
+// Real-time listener
+onSnapshot(collection(db,'orders'), snap => {
+  orders = snap.docs.map(d => ({ _id: d.id, ...d.data() }));
+  // sort newest first (by createdAt)
+  orders.sort((a,b) => {
+    const ta = a.createdAt?.seconds || 0;
+    const tb = b.createdAt?.seconds || 0;
+    return tb - ta;
+  });
+  updateStats();
+  updateNotif();
+  render();
+}, err => {
+  console.error(err);
+  document.getElementById('orders-list').innerHTML =
+    `<div class="empty"><div class="ico">❌</div><p>خطأ في الاتصال · Erreur de connexion<br><small>${err.message}</small></p></div>`;
+});
+
+function updateStats(){
+  document.getElementById('s-total').textContent     = orders.length;
+  document.getElementById('s-pending').textContent   = orders.filter(o=>o.status==='pending').length;
+  document.getElementById('s-confirmed').textContent = orders.filter(o=>o.status==='confirmed').length;
+  document.getElementById('s-delivered').textContent = orders.filter(o=>o.status==='delivered').length;
+}
+
+function updateNotif(){
+  const n = orders.filter(o=>o.isNew).length;
+  const el = document.getElementById('notifCount');
+  el.textContent = n;
+  el.classList.toggle('show', n > 0);
+}
+
+window.setFilter = btn => {
+  document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = btn.dataset.f;
+  render();
+};
+
+window.render = () => {
+  const q = document.getElementById('search-inp').value.toLowerCase().trim();
+  const filtered = orders.filter(o => {
+    const mf = currentFilter==='all' || o.status===currentFilter;
+    const mq = !q || o.name?.toLowerCase().includes(q) || o.phone?.includes(q) || o.address?.toLowerCase().includes(q);
+    return mf && mq;
+  });
+
+  const list = document.getElementById('orders-list');
+  if(!filtered.length){
+    list.innerHTML=`<div class="empty"><div class="ico">🌸</div><p>لا توجد طلبات · Aucune commande</p></div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(o => {
+    const dateStr = o.createdAt?.seconds
+      ? new Date(o.createdAt.seconds*1000).toLocaleString('fr-FR')
+      : '—';
+    return `
+    <div class="order-card${o.isNew?' new-order':''}" id="card-${o._id}">
+      <div class="order-head">
+        <div class="ava">🌷</div>
+        <div class="order-meta">
+          <div class="order-name">
+            ${o.isNew?'<span class="new-badge">جديد · NEW</span>':''}
+            ${esc(o.name)}
+          </div>
+          <div class="order-sub">📞 ${esc(o.phone)} · ${dateStr}</div>
+        </div>
+        <span class="pill ${SC[o.status]||'s-pending'}">${SL[o.status]||o.status}</span>
+      </div>
+
+      <div class="order-details">
+        <div class="det">📍 <span>${esc(o.address)}</span></div>
+        <div class="det">📅 <span>${esc(o.date)}</span></div>
+        <div class="det">💳 <span>${esc(o.payment)}</span></div>
+      </div>
+
+      ${o.note?`<div class="order-note">💬 ${esc(o.note)}</div>`:''}
+
+      <div class="order-imgs">
+        <div class="thumb-wrap">
+          ${o.modelImg
+            ?`<img class="img-thumb" src="${o.modelImg}" onclick="openModal('${o.modelImg}')"><div class="thumb-lbl">الموديل</div>`
+            :`<div class="no-img">🌸</div>`}
+        </div>
+        <div class="thumb-wrap">
+          ${o.receiptImg
+            ?`<img class="img-thumb" src="${o.receiptImg}" onclick="openModal('${o.receiptImg}')"><div class="thumb-lbl">الوصل</div>`
+            :`<div class="no-img">🧾</div>`}
+        </div>
+      </div>
+
+      <div class="order-actions">
+        <button class="act act-confirm"  onclick="setStatus('${o._id}','confirmed')">✅ تأكيد</button>
+        <button class="act act-refuse"   onclick="setStatus('${o._id}','refused')">❌ رفض</button>
+        <button class="act act-deliver"  onclick="setStatus('${o._id}','delivered')">🚚 موصل</button>
+        <button class="act act-del"      onclick="askDel('${o._id}')">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+window.setStatus = async (id, status) => {
+  try {
+    await updateDoc(doc(db,'orders',id), { status, isNew: false });
+    toast({confirmed:'✅ تم التأكيد',refused:'❌ تم الرفض',delivered:'🚚 تم التوصيل'}[status]||'✅', '#1a9e5c');
+  } catch(e){ toast('❌ خطأ · Erreur','#d94040'); }
+};
+
+window.askDel = id => { deleteTarget=id; document.getElementById('confirmDlg').classList.add('open'); };
+window.cancelDel = ()=>{ deleteTarget=null; document.getElementById('confirmDlg').classList.remove('open'); };
+window.confirmDel = async ()=>{
+  if(!deleteTarget) return;
+  try {
+    await deleteDoc(doc(db,'orders',deleteTarget));
+    toast('🗑️ تم الحذف','#555');
+  } catch(e){ toast('❌ خطأ · Erreur','#d94040'); }
+  deleteTarget=null;
+  document.getElementById('confirmDlg').classList.remove('open');
+};
+
+window.openModal = src => { document.getElementById('modalImg').src=src; document.getElementById('imgModal').classList.add('open'); };
+window.closeModal = ()=>document.getElementById('imgModal').classList.remove('open');
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function toast(msg, bg='#1a9e5c'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.background=bg;
+  t.style.boxShadow=`0 6px 22px ${bg}66`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+</script>
+</body>
+</html>
