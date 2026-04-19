@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleurs by Liza 🌹 Commander</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#d4517a;--pink-light:#fceef3;--pink-dark:#a83660;
+  --cream:#fdf8f5;--white:#fff;--text:#2d1a24;--muted:#9e7a88;
+  --border:#f0d8e2;--shadow:0 2px 12px rgba(180,60,100,.08);--r:18px
+}
+body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,#2d1a24 0%,#6b2040 45%,#c04070 100%);padding:48px 24px 52px;text-align:center;position:relative;overflow:hidden}
+.hero::before,.hero::after{content:'🌹🌸🌺🌷🌹🌸🌺🌷';position:absolute;left:0;right:0;font-size:20px;letter-spacing:4px;opacity:.18;white-space:nowrap;overflow:hidden}
+.hero::before{top:-8px}.hero::after{bottom:-8px}
+.logo-wrap{display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);margin-bottom:16px;font-size:36px;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.hero-brand{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;font-style:italic;color:#fff;margin-bottom:4px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:20px}
+.hero-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.hero-tag{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);padding:5px 14px;border-radius:30px;font-size:12px;border:1px solid rgba(255,255,255,.2)}
+
+.divider{text-align:center;padding:20px 0 4px;font-size:22px;letter-spacing:8px;color:var(--pink);opacity:.5}
+.body-wrap{padding:8px 16px 48px;max-width:520px;margin:0 auto}
+
+.card{background:var(--white);border-radius:var(--r);padding:22px 20px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);animation:fadeUp .5s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.12s}.card:nth-child(3){animation-delay:.19s}.card:nth-child(4){animation-delay:.26s}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--pink-dark);margin-bottom:18px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px dashed var(--border)}
+
+.field{margin-bottom:14px}.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.field label .req{color:var(--pink);margin-right:2px}
+.field input,.field textarea{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;font-family:'Tajawal',sans-serif;font-size:14px;color:var(--text);background:var(--pink-light);outline:none;transition:all .22s;appearance:none}
+.field input:focus,.field textarea:focus{border-color:var(--pink);background:#fff;box-shadow:0 0 0 3.5px rgba(212,81,122,.13)}
+.field textarea{resize:vertical;min-height:78px}
+
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pay-label{display:flex;align-items:center;gap:9px;padding:11px 13px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text);background:var(--pink-light);transition:all .2s;user-select:none}
+.pay-label input[type=radio]{display:none}
+.pay-label:has(input:checked){border-color:var(--pink);background:linear-gradient(135deg,#fce8ef,#ffd6e8);color:var(--pink-dark);box-shadow:0 3px 12px rgba(212,81,122,.18);font-weight:700}
+.pay-ico{font-size:20px;flex-shrink:0}
+.pay-label.full{grid-column:span 2}
+
+.upload-zone{position:relative;border:2px dashed var(--border);border-radius:14px;padding:22px 16px;text-align:center;background:var(--pink-light);cursor:pointer;transition:all .22s;overflow:hidden}
+.upload-zone:hover{border-color:var(--pink);background:#fce4ee}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.up-ico{font-size:32px;margin-bottom:6px}.up-title{font-size:14px;font-weight:600;color:var(--pink-dark);margin-bottom:2px}.up-sub{font-size:12px;color:var(--muted)}
+.upload-badge{display:inline-block;margin-top:6px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}
+.badge-opt{background:#f0f0f0;color:#888}.badge-req{background:#ffd6e0;color:var(--pink-dark)}
+.preview-img{display:none;width:100%;max-height:130px;object-fit:cover;border-radius:10px;margin-top:10px;border:2px solid var(--border)}
+
+.btn-submit{width:100%;padding:17px;margin-top:6px;background:linear-gradient(135deg,var(--pink),var(--pink-dark));color:#fff;border:none;border-radius:16px;font-family:'Tajawal',sans-serif;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(168,54,96,.38);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(168,54,96,.45)}
+.btn-submit:disabled{opacity:.6;transform:none;cursor:not-allowed}
+.footer{text-align:center;padding:10px 20px 24px;font-size:12px;color:var(--muted)}.footer strong{color:var(--pink)}
+
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-90px);padding:14px 26px;border-radius:50px;font-size:14px;font-weight:600;color:#fff;z-index:9999;transition:transform .45s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.22);pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:linear-gradient(135deg,#1a9e5c,#15784a)}.toast.error{background:linear-gradient(135deg,#e05555,#b83030)}
+
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(45,26,36,.6);z-index:8000;align-items:center;justify-content:center;flex-direction:column;gap:14px;backdrop-filter:blur(4px)}
+.loading-overlay.show{display:flex}
+.spinner{width:50px;height:50px;border:4px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-overlay p{color:#fff;font-size:15px;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="logo-wrap">🌹</div>
+  <div class="hero-brand">Fleurs by Liza</div>
+  <div class="hero-sub">Alger · Fleurs & Cadeaux Premium 🌷 عطور وزهور راقية</div>
+  <div class="hero-tags">
+    <span class="hero-tag">✅ +10k clients</span>
+    <span class="hero-tag">🚚 Livraison rapide</span>
+    <span class="hero-tag">💐 Premium</span>
+  </div>
+</div>
+
+<div class="divider">🌸 ✦ 🌸</div>
+
+<div class="body-wrap">
+
+  <div class="card">
+    <div class="card-title">👤 معلوماتك · Vos informations</div>
+    <div class="field">
+      <label><span class="req">*</span>الاسم الكامل · Nom complet</label>
+      <input type="text" id="f-name" placeholder="مثال: Amina Benali">
+    </div>
+    <div class="field">
+      <label><span class="req">*</span>رقم الهاتف · Téléphone</label>
+      <input type="tel" id="f-phone" placeholder="0555 00 00 00">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📍 التوصيل · Livraison</div>
+    <div class="field">
+      <label><span class="req">*</span>العنوان · Adresse complète</label>
+      <input type="text" id="f-address" placeholder="الحي، الشارع، الولاية / Quartier, Rue, Wilaya">
+    </div>
+    <div class="field">
+      <label><span class="req">*</span>تاريخ التوصيل · Date de livraison</label>
+      <input type="date" id="f-date">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌺 تفاصيل الطلب · Détails</div>
+    <div class="field">
+      <label>صورة الموديل · Photo du modèle</label>
+      <div class="upload-zone">
+        <input type="file" id="f-model-img" accept="image/*" onchange="previewImage(this,'prev-model')">
+        <div class="up-ico">📷</div>
+        <div class="up-title">أرسل صورة الباقة · Envoyer une photo</div>
+        <div class="up-sub">اضغط لاختيار · Appuyez pour choisir</div>
+        <span class="upload-badge badge-opt">اختياري · Optionnel</span>
+        <img id="prev-model" class="preview-img">
+      </div>
+    </div>
+    <div class="field">
+      <label>رسالة / ملاحظة · Note</label>
+      <textarea id="f-note" placeholder="مثال: باقة عيد ميلاد، ألوان مفضلة..."></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💳 الدفع · Paiement</div>
+    <div class="field">
+      <label><span class="req">*</span>طريقة الدفع · Méthode</label>
+      <div class="pay-grid">
+        <label class="pay-label"><input type="radio" name="pay" value="BaridiMob"><span class="pay-ico">📱</span>BaridiMob</label>
+        <label class="pay-label"><input type="radio" name="pay" value="CCP"><span class="pay-ico">🏦</span>CCP</label>
+        <label class="pay-label"><input type="radio" name="pay" value="Visa"><span class="pay-ico">💳</span>Visa</label>
+        <label class="pay-label"><input type="radio" name="pay" value="Binance"><span class="pay-ico">₿</span>Binance</label>
+        <label class="pay-label full"><input type="radio" name="pay" value="PayPal"><span class="pay-ico">🅿️</span>PayPal</label>
+      </div>
+    </div>
+    <div class="field">
+      <label><span class="req">*</span>وصل الدفع · Reçu &nbsp;<strong style="color:var(--pink)">(إجباري · Obligatoire)</strong></label>
+      <div class="upload-zone">
+        <input type="file" id="f-receipt" accept="image/*" onchange="previewImage(this,'prev-receipt')">
+        <div class="up-ico">🧾</div>
+        <div class="up-title">ارفع وصل الدفع · Joindre le reçu</div>
+        <div class="up-sub">صورة أو screenshot</div>
+        <span class="upload-badge badge-req">إجباري · Obligatoire</span>
+        <img id="prev-receipt" class="preview-img">
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-submit" id="submitBtn" onclick="submitOrder()">
+    🌹 تأكيد الطلب · Valider la commande
+  </button>
+
+  <div class="footer">
+    <strong>Fleurs by Liza</strong> · Alger 🇩🇿 · +10k clients satisfaits<br>
+    سيتم التواصل معك قريباً · Nous vous contacterons rapidement
+  </div>
+</div>
+
+<div class="loading-overlay" id="loader">
+  <div class="spinner"></div>
+  <p>جاري الإرسال... · Envoi en cours...</p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp }                          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:            "AIzaSyC2e6tX28E-BynFa3Be3nIbo-I29iLPidA",
+  authDomain:        "fleursby-liza.firebaseapp.com",
+  projectId:         "fleursby-liza",
+  storageBucket:     "fleursby-liza.firebasestorage.app",
+  messagingSenderId: "785764270424",
+  appId:             "1:785764270424:web:d030dcee6d97335c4ba52d",
+  measurementId:     "G-GCK1JZBM2H"
+});
+const db = getFirestore(app);
+
+document.getElementById('f-date').min = new Date().toISOString().split('T')[0];
+
+window.previewImage = (input, pid) => {
+  const prev = document.getElementById(pid);
+  if (!input.files?.[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    prev.src = e.target.result; prev.style.display = 'block';
+    const z = input.closest('.upload-zone');
+    ['up-ico','up-title','up-sub'].forEach(c => z.querySelector('.'+c).style.display='none');
+  };
+  reader.readAsDataURL(input.files[0]);
+};
+
+function resizeAndEncode(input) {
+  return new Promise(resolve => {
+    if (!input.files?.[0]) { resolve(null); return; }
+    const img = new Image();
+    const url = URL.createObjectURL(input.files[0]);
+    img.onload = () => {
+      const MAX=700; let w=img.width, h=img.height;
+      if(w>MAX||h>MAX){ if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;} }
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url);
+      resolve(c.toDataURL('image/jpeg',0.72));
+    };
+    img.src = url;
+  });
+}
+
+function toast(msg, type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'),4500);
+}
+
+window.submitOrder = async () => {
+  const name    = document.getElementById('f-name').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const address = document.getElementById('f-address').value.trim();
+  const date    = document.getElementById('f-date').value;
+  const payEl   = document.querySelector('input[name="pay"]:checked');
+  const receipt = document.getElementById('f-receipt');
+
+  if(!name)                             { toast('⚠️ أدخل اسمك · Entrez votre nom','error'); return; }
+  if(!phone)                            { toast('⚠️ أدخل رقم الهاتف · Téléphone manquant','error'); return; }
+  if(!address)                          { toast('⚠️ أدخل العنوان · Adresse manquante','error'); return; }
+  if(!date)                             { toast('⚠️ اختر تاريخ التوصيل · Date manquante','error'); return; }
+  if(!payEl)                            { toast('⚠️ اختر طريقة الدفع · Paiement manquant','error'); return; }
+  if(!receipt.files?.length)            { toast('⚠️ وصل الدفع إجباري · Reçu obligatoire','error'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  document.getElementById('loader').classList.add('show');
+
+  try {
+    const [modelImg, receiptImg] = await Promise.all([
+      resizeAndEncode(document.getElementById('f-model-img')),
+      resizeAndEncode(receipt)
+    ]);
+
+    await addDoc(collection(db,'orders'), {
+      name, phone, address, date,
+      payment:    payEl.value,
+      note:       document.getElementById('f-note').value.trim(),
+      modelImg:   modelImg   || null,
+      receiptImg: receiptImg || null,
+      status:     'pending',
+      isNew:      true,
+      createdAt:  serverTimestamp()
+    });
+
+    document.getElementById('loader').classList.remove('show');
+    toast('✅ تم إرسال طلبك بنجاح! · Commande envoyée avec succès!','success');
+    resetForm();
+  } catch(err) {
+    console.error(err);
+    document.getElementById('loader').classList.remove('show');
+    toast('❌ خطأ في الإرسال، حاول مجدداً · Erreur réseau, réessayez','error');
+  }
+  btn.disabled = false;
+};
+
+function resetForm(){
+  ['f-name','f-phone','f-address','f-date','f-note'].forEach(id=>document.getElementById(id).value='');
+  document.querySelectorAll('input[name="pay"]').forEach(r=>r.checked=false);
+  ['f-model-img','f-receipt'].forEach(id=>document.getElementById(id).value='');
+  ['prev-model','prev-receipt'].forEach(id=>{ const el=document.getElementById(id); el.style.display='none'; el.src=''; });
+  document.querySelectorAll('.upload-zone').forEach(z=>{
+    ['up-ico','up-title','up-sub'].forEach(c=>z.querySelector('.'+c).style.display='');
+  });
+}
+</script>
+</body>
+</html>
